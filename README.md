@@ -7,13 +7,13 @@ Provide polyfill to support EventSource in browser where it is not available.
 
 ## Project content
 
-### javascript
+### javascript/
 
  * Polyfill module : [eventsource.js](javascript/src/eventsource.js)
  * Jasmine Unit Tests [eventSourceSpec.js](javascript/spec/eventsourceSpec.js)
 
 [eventsource.js](javascript/src/eventsource.js) is the main project deliverable. It has no dependencies.
 
-### test_server
+### test_server/
 
 This server is built using python twisted framework.
