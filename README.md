@@ -5,6 +5,8 @@ Provide polyfill to support EventSource in browser where it is not available.
  * Tested in Internet Explorer 8 +
  * Tested in Android browser 2.1 +
 
+To run the complete **Project Test Suite** in your navigator, browse [this site](http://testevs.amvtek.com/)
+
 ## Project content
 
 ### javascript/
