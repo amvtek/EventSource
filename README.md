@@ -9,10 +9,10 @@ Provide polyfill to support EventSource in browser where it is not available.
 
 ### javascript
 
- * javascript/src/eventsource.js  (Polyfill module)
- * javascript/spec/eventsourceSpec.js (Jasmine Unit tests for eventsource.js)
+ * Polyfill module : [eventsource.js](javascript/src/eventsource.js)
+ * Jasmine Unit Tests [eventSourceSpec.js](javascript/spec/eventsourceSpec.js)
 
-eventsource.js is the main project deliverable. It has no depencies.
+[eventsource.js](javascript/src/eventsource.js) is the main project deliverable. It has no dependencies.
 
 ### test_server
 
