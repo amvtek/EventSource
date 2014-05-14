@@ -6,8 +6,9 @@ Provide polyfill to support EventSource in browser where it is not available.
  * Tested in Android browser 2.1 +
 
 To run the complete **Project Test Suite** in your navigator, browse [this
-site](http://testevs.amvtek.com/). Allow **sufficient time** ( ~ 5 minutes) for
-the full Test Suite to run...
+site](http://testevs.amvtek.com/). 
+
+Allow **sufficient time** ( ~ 5 minutes) for the full Test Suite to run...
 
 ## Project content
 
