@@ -23,7 +23,7 @@ javascript/
     Contains polyfill module and related unit tests
 
 test_server/
-    python server which generates *easy to test* EventSource 
+    python server which generates *easy to test* **event stream** 
 
 docs/
     documentation wiki
