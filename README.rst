@@ -7,7 +7,7 @@ Provide polyfill to support EventSource in browser where it is not available.
  * Used in production
  * Tested in Internet Explorer 8 + 
  * Tested in Android browser 2.1 +
- * `Documented <docs/>`_
+ * `Documented`_
 
 Run the tests now
 =================
@@ -27,3 +27,5 @@ test_server/
 
 docs/
     documentation wiki
+
+.. _Documented: https://github.com/amvtek/EventSource/wiki
