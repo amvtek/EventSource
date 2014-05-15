@@ -7,7 +7,7 @@ Provide polyfill to support EventSource in browser where it is not available.
  * Used in production
  * Tested in Internet Explorer 8 + 
  * Tested in Android browser 2.1 +
- * `Documented <wiki>`_
+ * `Documented <docs/>`_
 
 Run the tests now
 =================
