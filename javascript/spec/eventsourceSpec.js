@@ -551,6 +551,7 @@ describe('Tests with twisted server:', function() {
     function addEventListeners(evs, done) {
 
         evs.addEventListener('message', function (e) {
+//            console.log('message: ' + e.type + ":" + e.data)
             if (e.data) {receivedMessageEvents.push(e.data);}
         }, false);
         evs.addEventListener('open', function (e) {
@@ -560,10 +561,12 @@ describe('Tests with twisted server:', function() {
             receivedErrorEvents.push(e.type);
         }, false);
         evs.addEventListener('testmeta', function (e) {
+//            console.log("received testmeta:" + e.type + "["+ evs.id +"]: "+ e.data);
             receivedTestMetaEvents = JSON.parse(e.data);
         }, false);
         evs.addEventListener('testend', function (e) {
             receivedTestEndEvents.push(e.type);
+//            console.log('received tesend' + e.type + ":" + e.data + "end");
             done();
         }, false);
     }

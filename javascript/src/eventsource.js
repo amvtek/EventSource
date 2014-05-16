@@ -18,7 +18,6 @@
         setTimeout(function(){evs.poll()}, 0);
     };
 
-
     EventSource.prototype = {
 
         CONNECTING: 0,
@@ -131,6 +130,8 @@
 
 
         cleanup: function() {
+
+            this.log('evs cleaning up')
 
             if (this._pollTimer){
                 clearInterval(this._pollTimer);
@@ -272,7 +273,7 @@
 
                 if (datas.length) {
                     // dispatch a new event
-                    var event = new this.MessageEvent(datas.join('\n'), this.URL, this.lastEventId);
+                    var event = new this.MessageEvent(eventType, datas.join('\n'), this.URL, this.lastEventId);
                     this.dispatchEvent(eventType, event);
                 }
             }
@@ -280,12 +281,12 @@
             this.cache = events[events.length - 1];
         },
 
-        MessageEvent: function (data, origin, lastEventId) {
+        MessageEvent: function (type, data, origin, lastEventId) {
 
             this.data = data || null;
             this.origin = origin || '';
             this.lastEventId = lastEventId || '';
-            this.type = 'message';
+            this.type = type || 'message';
         },
 
         dispatchEvent: function (type, event) {
@@ -482,7 +483,7 @@
 
             abort: function() {
 
-                if ( this._request && (this._request.readyState != 4)) {
+                if ( this._request ) {
                     this._request.abort();
                 }
             }

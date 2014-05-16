@@ -173,6 +173,7 @@ class TestSource(object):
         self.closeAt = closeAt
         self.messages = [unicode(mess) for mess in messages or self.messages]
         self.chosenLnSep = RND.choice(self.lineSep)
+
         # self.chosenEvtSep = RND.choice(self.lineSep).rjust(RND.randint(2, 10))
         self.chosenEvtSep = self.chosenLnSep  # RND.choice(self.lineSep)
         self.sequence = ["Message %02i%s" %
@@ -258,7 +259,7 @@ class TestSource(object):
             yield encoder.encode_event(message)
 
         if seqEnd == len(sequence):
-            yield encode("", 'testend')
+            yield encode("This is the end", 'testend')
         else:
             yield encode("", None, seqEnd-1)
 
