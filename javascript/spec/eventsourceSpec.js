@@ -2,18 +2,21 @@
  * Created by vasi on 4/8/14.
  */
 
+var evsName = "EventSource",
+    evsImportName = (window._eventSourceImportPrefix || '') + evsName,
+    isEventSourceSupported = (window["EventSource"] != undefined);
+
 describe("Testing EventSource polyfill with MockupXHR", function() {
 
-    var evsImportName, previousXHR;
+    var previousXHR;
 
     beforeEach(function() {
 
-        evsImportName = (window._eventSourceImportPrefix||'')+"EventSource";
         var mockupXHR = function(evs) {
 
             this.responseText = '';
             this.evs = evs;
-        }
+        };
 
         mockupXHR.prototype = {
 
@@ -50,12 +53,10 @@ describe("Testing EventSource polyfill with MockupXHR", function() {
 
             sendData: function(str) {
 
-                evs = this.evs;
                 this.responseText += str;
-                evs.ondata();
-
+                this.evs.ondata();
             }
-        }
+        };
 
         this.eventSource = window[evsImportName];
         previousXHR = this.eventSource.prototype.XHR;
@@ -142,7 +143,7 @@ describe("Testing EventSource polyfill with MockupXHR", function() {
                 silentTimeout: defaults.silentTimeout, // milliseconds
                 getArgs: defaults.getArgs,
                 xhrHeaders: defaults.xhrHeaders
-            }
+            };
 
             var actual = {
                 interval: evs.interval,
@@ -164,7 +165,7 @@ describe("Testing EventSource polyfill with MockupXHR", function() {
             // the prefix is set in SpecRunner.html
 
             var evs = new this.eventSource('http://exampleurlWithParams.com');
-            var urlWithParams = evs.urlWithParams
+            var urlWithParams = evs.urlWithParams;
             expect(urlWithParams('http://example.com')).toBe('http://example.com');
         });
 
@@ -175,9 +176,9 @@ describe("Testing EventSource polyfill with MockupXHR", function() {
             Params.prototype = {
                 'a': 1,
                 'b': 2
-            }
+            };
             var evs = new this.eventSource('http://exampleurlWithParams.com');
-            var urlWithParams = evs.urlWithParams
+            var urlWithParams = evs.urlWithParams;
             expect(urlWithParams('http://example.com', new Params())).toBe('http://example.com');
         });
 
@@ -187,9 +188,9 @@ describe("Testing EventSource polyfill with MockupXHR", function() {
             var params =  {
                 a: 1,
                 b: 2
-            }
+            };
             var evs = new this.eventSource('http://exampleurlWithParams.com');
-            var urlWithParams = evs.urlWithParams
+            var urlWithParams = evs.urlWithParams;
             expect(urlWithParams('http://example.com', params)).toBe('http://example.com?a=1&b=2');
         });
     });
@@ -241,7 +242,7 @@ describe("Testing EventSource polyfill with MockupXHR", function() {
             var normalizeToLF = evs.normalizeToLF;
 
             var str = "LF:\n. CR:\r. CRLF:\r\n. and again LF:\n. CR:\r. CRLF:\r\n. Double CR:\r\r. Double CRLF:\r\n\r\n";
-            var expectedStr = "LF:\n. CR:\n. CRLF:\n. and again LF:\n. CR:\n. CRLF:\n. Double CR:\n\n. Double CRLF:\n\n"
+            var expectedStr = "LF:\n. CR:\n. CRLF:\n. and again LF:\n. CR:\n. CRLF:\n. Double CR:\n\n. Double CRLF:\n\n";
             var actualStr = normalizeToLF(str);
 
             expect(actualStr).toBe(expectedStr);
@@ -273,10 +274,9 @@ describe("Testing EventSource polyfill with MockupXHR", function() {
             setTimeout(function () {
                 done();
             }, 0)
-        })
+        });
 
         afterEach(function (done) {
-            console.log('closing the evs');
             evs.close();
             done();
         });
@@ -313,7 +313,6 @@ describe("Testing EventSource polyfill with MockupXHR", function() {
             var expectedEventId = '1983';
             evs._xhr.sendData('data: "First line of data."\ndata: "Second line of data."\n\ndata: "First part of broken message.');
             evs._xhr.sendData('Second part of broken message."\n\nid: '+expectedEventId+'\ndata: "Message with new id"\n\n');
-            var expectedEvents = ['"First line of data."\n"Second line of data."', '"First part of broken message.Second part of broken message."', '"Message with new id"'];
             expect(evs.lastEventId).toEqual(expectedEventId);
         });
 
@@ -335,7 +334,7 @@ describe("Testing EventSource polyfill with MockupXHR", function() {
 
                 previous = evs.silentTimeout;
                 jasmine.clock().install();
-            })
+            });
 
             afterEach(function(done) {
 
@@ -364,15 +363,17 @@ describe("Testing EventSource polyfill with MockupXHR", function() {
             });
         });
     });
-})
+});
 
 describe("Evaluating EventSource 'time to attach listener' doubt", function() {
 
-    var evsImportName, evs, previousXHR;
-//
+    var evs, previousXHR,
+        recievedMessageEvents = [],
+        recievedOpenEvents = [],
+        recievedErrorEvents = [];
+
     beforeEach(function (done) {
 
-        evsImportName = (window._eventSourceImportPrefix || '') + "EventSource";
         var mockupXHR = function (evs) {
 
             this.responseText = '';
@@ -381,7 +382,7 @@ describe("Evaluating EventSource 'time to attach listener' doubt", function() {
 
             // send data right away to stress the events
             this.sendData(this.initialData || '');
-        }
+        };
 
         mockupXHR.prototype = {
 
@@ -423,16 +424,14 @@ describe("Evaluating EventSource 'time to attach listener' doubt", function() {
                 this.responseText += str;
                 evs.ondata();
             }
-        }
+        };
 
         this.eventSource = window[evsImportName];
-        previousXHR = this.eventSource.prototype.XHR
+        previousXHR = this.eventSource.prototype.XHR;
         this.eventSource.prototype.XHR = mockupXHR;
 
         evs = new this.eventSource('http://exampleTimeToAttachDoubt.com');
-        recievedMessageEvents = [];
-        recievedOpenEvents = [];
-        recievedErrorEvents = [];
+
         evs.addEventListener('message', function(e) {
             recievedMessageEvents.push(e.data);
         }, false);
@@ -463,19 +462,17 @@ describe("Evaluating EventSource 'time to attach listener' doubt", function() {
 
 describe('Failed XHR request(invalid url) shall trigger EventSource to close and "error" event to be dispatched', function() {
 
-    var evsImportName, evs,
+    var evs,
         recievedMessageEvents = [],
         recievedOpenEvents = [],
         recievedErrorEvents = [];
 
     beforeEach(function (done) {
 
-        evsImportName = (window._eventSourceImportPrefix || '') + "EventSource";
         this.eventSource = window[evsImportName];
 
         // sending to wrong url
         evs = new this.eventSource('http://exampleFailedXHRequest');
-
 
         evs.addEventListener('message', function (e) {
             recievedMessageEvents.push(e.data);
@@ -494,7 +491,7 @@ describe('Failed XHR request(invalid url) shall trigger EventSource to close and
         evs.close();
         recievedErrorEvents = [];
         done();
-    })
+    });
 
     it("should send error event", function (done) {
 
@@ -505,14 +502,13 @@ describe('Failed XHR request(invalid url) shall trigger EventSource to close and
 
 describe('Failed XHR request(missing-code 404) shall trigger EventSource to close and "error" event to be dispatched', function() {
 
-    var evsImportName, evs,
+    var evs,
         recievedMessageEvents = [],
         recievedOpenEvents = [],
         recievedErrorEvents = [];
 
     beforeEach(function (done) {
 
-        evsImportName = (window._eventSourceImportPrefix || '') + "EventSource";
         this.eventSource = window[evsImportName];
 
         // sending to wrong url
@@ -533,7 +529,7 @@ describe('Failed XHR request(missing-code 404) shall trigger EventSource to clos
     afterEach(function () {
 
         evs.close()
-    })
+    });
 
     it("should send error event", function (done) {
 
@@ -544,9 +540,8 @@ describe('Failed XHR request(missing-code 404) shall trigger EventSource to clos
 
 describe('Tests with twisted server:', function() {
 
-    var evsImportName = (window._eventSourceImportPrefix || '') + "EventSource",
-        evsName = "EventSource",
-        evs,
+
+    var evs,
         receivedMessageEvents = [],
         receivedOpenEvents = [],
         receivedErrorEvents = [],
@@ -556,24 +551,18 @@ describe('Tests with twisted server:', function() {
     function addEventListeners(evs, done) {
 
         evs.addEventListener('message', function (e) {
-//            console.log(e.type + ' ' + e.data);
             if (e.data) {receivedMessageEvents.push(e.data);}
         }, false);
         evs.addEventListener('open', function (e) {
-//            console.log(e.type);
             receivedOpenEvents.push(e.type);
         }, false);
         evs.addEventListener('error', function (e) {
-//            console.log(e.type + ' ' + e.data);
             receivedErrorEvents.push(e.type);
         }, false);
         evs.addEventListener('testmeta', function (e) {
-//            console.log(e.type + ' ' + e.data);
             receivedTestMetaEvents = JSON.parse(e.data);
         }, false);
         evs.addEventListener('testend', function (e) {
-//            console.log('I received a testend.')
-//            console.log(e.type);
             receivedTestEndEvents.push(e.type);
             done();
         }, false);
@@ -588,7 +577,7 @@ describe('Tests with twisted server:', function() {
         receivedTestMetaEvents = [];
         receivedOpenEvents = [];
         done();
-    })
+    });
 
     describe('4-messages-with-seed-01', function() {
 
@@ -609,7 +598,7 @@ describe('Tests with twisted server:', function() {
                 it("data in testmeta event should match all incoming messages data", function () {
 
                     expect(receivedTestMetaEvents).toEqual(receivedMessageEvents);
-                })
+                });
 
                 it("testend event is received", function () {
 
@@ -618,34 +607,32 @@ describe('Tests with twisted server:', function() {
             });
         });
 
-        describe('using native(fallback to polyfill) eventsource', function () {
+        if (isEventSourceSupported) {
 
-            beforeEach(function (done) {
+            describe('using native eventsource', function () {
 
-                if (window[evsName]) {
+                beforeEach(function (done) {
+
                     var eventSource = window[evsName];
-                }
-                else {
-                    var eventSource = window[evsImportName];
-                }
 
-                evs = new eventSource(twistedUrl);
-                addEventListeners(evs, done);
-            });
+                    evs = new eventSource(twistedUrl);
+                    addEventListeners(evs, done);
+                });
 
-            describe ('after a complete run until testend:', function() {
+                describe ('after a complete run until testend:', function() {
 
-                it("data in testmeta event should match all incoming messages data", function () {
+                    it("data in testmeta event should match all incoming messages data", function () {
 
-                    expect(receivedTestMetaEvents).toEqual(receivedMessageEvents);
-                })
+                        expect(receivedTestMetaEvents).toEqual(receivedMessageEvents);
+                    });
 
-                it("testend event is received", function () {
+                    it("testend event is received", function () {
 
-                    expect(receivedTestEndEvents.length).toEqual(1);
-                })
-            });
-        })
+                        expect(receivedTestEndEvents.length).toEqual(1);
+                    })
+                });
+            })
+        }
     });
 
     describe('6-messages-with-seed-02', function() {
@@ -667,7 +654,7 @@ describe('Tests with twisted server:', function() {
                 it("data in testmeta event should match all incoming messages data", function () {
 
                     expect(receivedTestMetaEvents).toEqual(receivedMessageEvents);
-                })
+                });
 
                 it("testend event is received", function () {
 
@@ -676,34 +663,32 @@ describe('Tests with twisted server:', function() {
             });
         });
 
-        describe('using native(fallback to polyfill) eventsource', function () {
+        if (isEventSourceSupported) {
 
-            beforeEach(function (done) {
+            describe('using native eventsource', function () {
 
-                if (window[evsName]) {
+                beforeEach(function (done) {
+
                     var eventSource = window[evsName];
-                }
-                else {
-                    var eventSource = window[evsImportName];
-                }
 
-                evs = new eventSource(twistedUrl);
-                addEventListeners(evs, done);
-            });
+                    evs = new eventSource(twistedUrl);
+                    addEventListeners(evs, done);
+                });
 
-            describe ('after a complete run until testend:', function() {
+                describe ('after a complete run until testend:', function() {
 
-                it("data in testmeta event should match all incoming messages data", function () {
+                    it("data in testmeta event should match all incoming messages data", function () {
 
-                    expect(receivedTestMetaEvents).toEqual(receivedMessageEvents);
-                })
+                        expect(receivedTestMetaEvents).toEqual(receivedMessageEvents);
+                    });
 
-                it("testend event is received", function () {
+                    it("testend event is received", function () {
 
-                    expect(receivedTestEndEvents.length).toEqual(1);
-                })
-            });
-        })
+                        expect(receivedTestEndEvents.length).toEqual(1);
+                    })
+                });
+            })
+        }
     });
 
     describe('8-messages-closeat-4-with-seed-03', function() {
@@ -725,12 +710,12 @@ describe('Tests with twisted server:', function() {
                 it("data in testmeta event should match all incoming messages data", function () {
 
                     expect(receivedTestMetaEvents).toEqual(receivedMessageEvents);
-                })
+                });
 
                 it("testend event is received", function () {
 
                     expect(receivedTestEndEvents.length).toBe(1);
-                })
+                });
 
                 it("at least 1 error message are received, meaning 1 reconnection", function () {
 
@@ -739,39 +724,37 @@ describe('Tests with twisted server:', function() {
             });
         });
 
-        describe('using native(fallback to polyfill) eventsource', function () {
+        if (isEventSourceSupported) {
 
-            beforeEach(function (done) {
+            describe('using native eventsource', function () {
 
-                if (window[evsName]) {
+                beforeEach(function (done) {
+
                     var eventSource = window[evsName];
-                }
-                else {
-                    var eventSource = window[evsImportName];
-                }
 
-                evs = new eventSource(twistedUrl);
-                addEventListeners(evs, done);
-            });
-
-            describe ('after a complete run until testend:', function() {
-
-                it("data in testmeta event should match all incoming messages data", function () {
-
-                    expect(receivedTestMetaEvents).toEqual(receivedMessageEvents);
-                })
-
-                it("testend event is received", function () {
-
-                    expect(receivedTestEndEvents.length).toBe(1);
-                })
-
-                it("at least 1 error messages are received, meaning 1 reconnection", function () {
-
-                    expect(receivedErrorEvents.length).toBeGreaterThan(0);
+                    evs = new eventSource(twistedUrl);
+                    addEventListeners(evs, done);
                 });
-            });
-        })
+
+                describe ('after a complete run until testend:', function() {
+
+                    it("data in testmeta event should match all incoming messages data", function () {
+
+                        expect(receivedTestMetaEvents).toEqual(receivedMessageEvents);
+                    });
+
+                    it("testend event is received", function () {
+
+                        expect(receivedTestEndEvents.length).toBe(1);
+                    });
+
+                    it("at least 1 error messages are received, meaning 1 reconnection", function () {
+
+                        expect(receivedErrorEvents.length).toBeGreaterThan(0);
+                    });
+                });
+            })
+        }
     });
 
     describe('16-messages-closeat-5-with-seed-04', function() {
@@ -793,12 +776,12 @@ describe('Tests with twisted server:', function() {
                 it("data in testmeta event should match all incoming messages data", function () {
 
                     expect(receivedTestMetaEvents).toEqual(receivedMessageEvents);
-                })
+                });
 
                 it("testend event is received", function () {
 
                     expect(receivedTestEndEvents.length).toBe(1);
-                })
+                });
 
                 it("3 error messages are received, meaning 3 reconnections", function () {
 
@@ -807,39 +790,37 @@ describe('Tests with twisted server:', function() {
             });
         });
 
-        describe('using native(fallback to polyfill) eventsource', function () {
+        if (isEventSourceSupported) {
 
-            beforeEach(function (done) {
+            describe('using native eventsource', function () {
 
-                if (window[evsName]) {
+                beforeEach(function (done) {
+
                     var eventSource = window[evsName];
-                }
-                else {
-                    var eventSource = window[evsImportName];
-                }
 
-                evs = new eventSource(twistedUrl);
-                addEventListeners(evs, done);
-            });
-
-            describe ('after a complete run until testend:', function() {
-
-                it("data in testmeta event should match all incoming messages data", function () {
-
-                    expect(receivedTestMetaEvents).toEqual(receivedMessageEvents);
-                })
-
-                it("testend event is received", function () {
-
-                    expect(receivedTestEndEvents.length).toBe(1);
-                })
-
-                it("3 error messages are received, meaning 3 reconnections", function () {
-
-                    expect(receivedErrorEvents.length).toBeGreaterThan(1);
+                    evs = new eventSource(twistedUrl);
+                    addEventListeners(evs, done);
                 });
-            });
-        })
+
+                describe ('after a complete run until testend:', function() {
+
+                    it("data in testmeta event should match all incoming messages data", function () {
+
+                        expect(receivedTestMetaEvents).toEqual(receivedMessageEvents);
+                    });
+
+                    it("testend event is received", function () {
+
+                        expect(receivedTestEndEvents.length).toBe(1);
+                    });
+
+                    it("3 error messages are received, meaning 3 reconnections", function () {
+
+                        expect(receivedErrorEvents.length).toBeGreaterThan(1);
+                    });
+                });
+            })
+        }
     });
 });
 

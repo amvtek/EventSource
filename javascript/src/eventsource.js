@@ -14,7 +14,7 @@
 
         this.URL = url;
         this.setOptions(options);
-        evs = this;
+        var evs = this;
         setTimeout(function(){evs.poll()}, 0);
     };
 
@@ -106,14 +106,13 @@
                 this.cursor = 0;
                 this.cache = '';
                 this._xhr = new this.XHR(this);
-                evs = this;
                 this.resetNoActivityTimer();
 
             }
             catch (e) {
 
                 // in an attempt to silence the errors
-                this.log('There were errors inside the pool try-catch')
+                this.log('There were errors inside the pool try-catch');
                 this.dispatchEvent('error', { type: 'error', data: e.message });
             }
         },
@@ -168,7 +167,7 @@
         close: function () {
 
             this.readyState = this.CLOSED;
-            this.log('Closing connection. readyState: '+this.readyState)
+            this.log('Closing connection. readyState: '+this.readyState);
             this.cleanup();
         },
 
@@ -190,7 +189,7 @@
                 var buffer = request.getBuffer();
 
                 if (buffer.length > this.bufferSizeLimit) {
-                    this.log('buffer.length > this.bufferSizeLimit')
+                    this.log('buffer.length > this.bufferSizeLimit');
                     this.pollAgain();
                 }
 
@@ -213,13 +212,13 @@
 
                 // if request is finished, reopen the connection
                 if (request.isDone()) {
-                    this.log('request.isDone(). reopening the connection')
+                    this.log('request.isDone(). reopening the connection');
                     this.pollAgain(this.interval);
                 }
             }
             else if (this.readyState !== this.CLOSED) {
 
-                this.log('this.readyState !== this.CLOSED')
+                this.log('this.readyState !== this.CLOSED');
                 this.pollAgain(this.interval);
 
                 //MV: Unsure why an error was previously dispatched
@@ -540,7 +539,7 @@
             if (evs.getArgs) {
 
                 // copy evs.getArgs in reqGetArgs
-                var defaultArgs = evs.getArgs
+                var defaultArgs = evs.getArgs;
                     for (var key in defaultArgs) {
                         if (defaultArgs.hasOwnProperty(key)){
                             reqGetArgs[key] = defaultArgs[key];
@@ -606,15 +605,9 @@
     function isOldIE () {
 
         //return true if we are in IE8 or IE9
-        var isOld = (window.XDomainRequest && (window.XMLHttpRequest && new XMLHttpRequest().responseType === undefined)) ? true : false;
-        return isOld;
-    };
-
-//    var _wsBeforeLF = /[ \f\r\t\v\u00a0\u1680\u180e\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000]*\n/g;
+        return (window.XDomainRequest && (window.XMLHttpRequest && new XMLHttpRequest().responseType === undefined)) ? true : false;
+    }
 
     global[evsImportName] = EventSource;
-
-    // if ('module' in global) module.exports = EventSource;
-    // MV: Unsure in which context module.exports is usefull
 
 })(this);
