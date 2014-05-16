@@ -27,18 +27,22 @@
 
 <body>
 
-<p>
-    Be patient, those tests need a few minutes to complete.
-</p>
+<h1> Polyfill EventSource Test Suite </h1>
 
-<script>
-    if (window["EventSource"]) {
-        document.write('<p>Browser supports EventSource natively</p>')
-    }
-    else {
-        document.write("<p>Browser doesn't support EventSource natively</p>")
-    }
-</script>
+<div class="test-infos">
+  <p>
+      Be patient, those tests need a few minutes to complete.
+  </p>
+
+  <script>
+      if (window["EventSource"]) {
+	  document.write('<p>This browser supports EventSource natively</p>')
+      }
+      else {
+	  document.write("<p>This browser doesn't support EventSource</p>")
+      }
+  </script>
+</div>
 
 </body>
 
