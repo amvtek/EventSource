@@ -36,7 +36,7 @@
 
             bufferSizeLimit: 256*1024, // bytes
 
-            silentTimeout: 90000, // milliseconds
+            silentTimeout: 300000, // milliseconds
 
             getArgs:{
                 'evs_buffer_size_limit': 256*1024
