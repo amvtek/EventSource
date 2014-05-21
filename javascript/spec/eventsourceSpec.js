@@ -6,7 +6,7 @@ var evsName = "EventSource",
     evsImportName = (window._eventSourceImportPrefix || '') + evsName,
     isEventSourceSupported = (window["EventSource"] != undefined);
 
-xdescribe("Testing EventSource polyfill with MockupXHR", function() {
+describe("Testing EventSource polyfill with MockupXHR", function() {
 
     var previousXHR;
 
@@ -365,7 +365,7 @@ xdescribe("Testing EventSource polyfill with MockupXHR", function() {
     });
 });
 
-xdescribe("Evaluating EventSource 'time to attach listener' doubt", function() {
+describe("Evaluating EventSource 'time to attach listener' doubt", function() {
 
     var evs, previousXHR,
         recievedMessageEvents = [],
@@ -460,7 +460,7 @@ xdescribe("Evaluating EventSource 'time to attach listener' doubt", function() {
     })
 });
 
-xdescribe('Failed XHR request(invalid url) shall trigger EventSource to close and "error" event to be dispatched', function() {
+describe('Failed XHR request(invalid url) shall trigger EventSource to close and "error" event to be dispatched', function() {
 
     var evs,
         recievedMessageEvents = [],
@@ -500,7 +500,7 @@ xdescribe('Failed XHR request(invalid url) shall trigger EventSource to close an
     });
 });
 
-xdescribe('Failed XHR request(missing-code 404) shall trigger EventSource to close and "error" event to be dispatched', function() {
+describe('Failed XHR request(missing-code 404) shall trigger EventSource to close and "error" event to be dispatched', function() {
 
     var evs,
         recievedMessageEvents = [],
@@ -606,7 +606,7 @@ describe('Tests with twisted server:', function() {
                     expect(receivedTestMetaEvents).toEqual(receivedMessageEvents);
                 });
 
-                xit("testend event is received", function () {
+                it("testend event is received", function () {
 
                     expect(receivedTestEndEvents.length).toEqual(1);
                 })
@@ -632,7 +632,7 @@ describe('Tests with twisted server:', function() {
                         expect(receivedTestMetaEvents).toEqual(receivedMessageEvents);
                     });
 
-                    xit("testend event is received", function () {
+                    it("testend event is received", function () {
 
                         expect(receivedTestEndEvents.length).toEqual(1);
                     })
@@ -641,7 +641,7 @@ describe('Tests with twisted server:', function() {
         }
     });
 
-    xdescribe('6-messages-with-seed-02', function() {
+    describe('6-messages-with-seed-02', function() {
 
         var twistedUrl = '/test/eventsource/6-messages-with-seed-02';
 
@@ -697,7 +697,7 @@ describe('Tests with twisted server:', function() {
         }
     });
 
-    xdescribe('8-messages-closeat-4-with-seed-03', function() {
+    describe('8-messages-closeat-4-with-seed-03', function() {
 
         var twistedUrl = '/test/eventsource/8-messages-closeat-4-with-seed-03';
 
@@ -763,7 +763,7 @@ describe('Tests with twisted server:', function() {
         }
     });
 
-    xdescribe('16-messages-closeat-5-with-seed-04', function() {
+    describe('16-messages-closeat-5-with-seed-04', function() {
 
         var twistedUrl = '/test/eventsource/16-messages-closeat-5-with-seed-04';
 
