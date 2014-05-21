@@ -6,7 +6,7 @@ var evsName = "EventSource",
     evsImportName = (window._eventSourceImportPrefix || '') + evsName,
     isEventSourceSupported = (window["EventSource"] != undefined);
 
-describe("Testing EventSource polyfill with MockupXHR", function() {
+xdescribe("Testing EventSource polyfill with MockupXHR", function() {
 
     var previousXHR;
 
@@ -365,7 +365,7 @@ describe("Testing EventSource polyfill with MockupXHR", function() {
     });
 });
 
-describe("Evaluating EventSource 'time to attach listener' doubt", function() {
+xdescribe("Evaluating EventSource 'time to attach listener' doubt", function() {
 
     var evs, previousXHR,
         recievedMessageEvents = [],
@@ -460,7 +460,7 @@ describe("Evaluating EventSource 'time to attach listener' doubt", function() {
     })
 });
 
-describe('Failed XHR request(invalid url) shall trigger EventSource to close and "error" event to be dispatched', function() {
+xdescribe('Failed XHR request(invalid url) shall trigger EventSource to close and "error" event to be dispatched', function() {
 
     var evs,
         recievedMessageEvents = [],
@@ -500,7 +500,7 @@ describe('Failed XHR request(invalid url) shall trigger EventSource to close and
     });
 });
 
-describe('Failed XHR request(missing-code 404) shall trigger EventSource to close and "error" event to be dispatched', function() {
+xdescribe('Failed XHR request(missing-code 404) shall trigger EventSource to close and "error" event to be dispatched', function() {
 
     var evs,
         recievedMessageEvents = [],
@@ -552,6 +552,7 @@ describe('Tests with twisted server:', function() {
 
         evs.addEventListener('message', function (e) {
 //            console.log('message: ' + e.type + ":" + e.data)
+//            console.log(e)
             if (e.data) {receivedMessageEvents.push(e.data);}
         }, false);
         evs.addEventListener('open', function (e) {
@@ -562,11 +563,13 @@ describe('Tests with twisted server:', function() {
         }, false);
         evs.addEventListener('testmeta', function (e) {
 //            console.log("received testmeta:" + e.type + "["+ evs.id +"]: "+ e.data);
+//            console.log(e)
             receivedTestMetaEvents = JSON.parse(e.data);
         }, false);
         evs.addEventListener('testend', function (e) {
             receivedTestEndEvents.push(e.type);
-//            console.log('received tesend' + e.type + ":" + e.data + "end");
+            console.log('received tesend' + e.type + ":" + e.data + "end");
+            console.log(e)
             done();
         }, false);
     }
@@ -603,7 +606,7 @@ describe('Tests with twisted server:', function() {
                     expect(receivedTestMetaEvents).toEqual(receivedMessageEvents);
                 });
 
-                it("testend event is received", function () {
+                xit("testend event is received", function () {
 
                     expect(receivedTestEndEvents.length).toEqual(1);
                 })
@@ -629,7 +632,7 @@ describe('Tests with twisted server:', function() {
                         expect(receivedTestMetaEvents).toEqual(receivedMessageEvents);
                     });
 
-                    it("testend event is received", function () {
+                    xit("testend event is received", function () {
 
                         expect(receivedTestEndEvents.length).toEqual(1);
                     })
@@ -638,7 +641,7 @@ describe('Tests with twisted server:', function() {
         }
     });
 
-    describe('6-messages-with-seed-02', function() {
+    xdescribe('6-messages-with-seed-02', function() {
 
         var twistedUrl = '/test/eventsource/6-messages-with-seed-02';
 
@@ -694,7 +697,7 @@ describe('Tests with twisted server:', function() {
         }
     });
 
-    describe('8-messages-closeat-4-with-seed-03', function() {
+    xdescribe('8-messages-closeat-4-with-seed-03', function() {
 
         var twistedUrl = '/test/eventsource/8-messages-closeat-4-with-seed-03';
 
@@ -760,7 +763,7 @@ describe('Tests with twisted server:', function() {
         }
     });
 
-    describe('16-messages-closeat-5-with-seed-04', function() {
+    xdescribe('16-messages-closeat-5-with-seed-04', function() {
 
         var twistedUrl = '/test/eventsource/16-messages-closeat-5-with-seed-04';
 

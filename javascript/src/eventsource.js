@@ -273,20 +273,12 @@
 
                 if (datas.length) {
                     // dispatch a new event
-                    var event = new this.MessageEvent(eventType, datas.join('\n'), this.URL, this.lastEventId);
+                    var event = new MessageEvent(eventType, datas.join('\n'), window.location.origin, this.lastEventId);
                     this.dispatchEvent(eventType, event);
                 }
             }
 
             this.cache = events[events.length - 1];
-        },
-
-        MessageEvent: function (type, data, origin, lastEventId) {
-
-            this.data = data || null;
-            this.origin = origin || '';
-            this.lastEventId = lastEventId || '';
-            this.type = type || 'message';
         },
 
         dispatchEvent: function (type, event) {
@@ -601,6 +593,17 @@
                 }
             }
         };
+    }
+
+    function MessageEvent(type, data, origin, lastEventId) {
+
+        this.bubbles = false;
+        this.cancelBubble = false;
+        this.cancelable = false;
+        this.data = data || null;
+        this.origin = origin || '';
+        this.lastEventId = lastEventId || '';
+        this.type = type || 'message';
     }
 
     function isOldIE () {
