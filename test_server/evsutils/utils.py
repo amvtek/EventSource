@@ -190,17 +190,17 @@ class TestSource(object):
 
         start from fromId=0 to closeAt=1
         >>> source = TestSource(2014, 10, 1)  # closeAt is 1
-        >>> source.sequence = [0, 1, 2]
+        >>> source.sequence = [1, 2, 3]
 
         >>> actual = list(source.visit_from())
         >>> sep = source.chosenLnSep + source.chosenEvtSep
-        >>> expected = ev(['event: testmeta\\ndata: [0, 1, 2]', 'data: 0', 'data: 1\\nid: 1'], sep)
+        >>> expected = ev(['event: testmeta\\ndata: [1, 2, 3]', 'data: 1\\nid: 1'], sep)
         >>> actual == expected
         True
 
         start from fromId=7 to closeAt=4
         >>> source = TestSource(2014, 10, 4)  # closeAt is 4
-        >>> source.sequence = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+        >>> source.sequence = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
         >>> actual = list(source.visit_from(7))
         >>> sep = source.chosenLnSep + source.chosenEvtSep
@@ -208,29 +208,29 @@ class TestSource(object):
         >>> actual == expected
         True
 
-        start from fromId=7 to closeAt=None
+        start from fromId=7 to closeAt=10
         >>> source = TestSource(2014, 10)  # to the end
-        >>> source.sequence = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+        >>> source.sequence = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
         >>> actual = list(source.visit_from(7))
         >>> sep = source.chosenLnSep + source.chosenEvtSep
-        >>> expected = ev(['data: 7\\nid: 7', 'data: 8\\nid: 8', 'data: 9\\nid: 9', 'event: testend\\ndata: This is the end'], sep)
+        >>> expected = ev(['data: 7\\nid: 7', 'data: 8\\nid: 8', 'data: 9\\nid: 9', 'data: 10\\nid: 10', 'event: testend\\ndata: This is the end'], sep)
         >>> actual == expected
         True
 
         start from fromId=5 to closeAt=4
         >>> source = TestSource(2014, 8, 4)  # to the end
-        >>> source.sequence = [0, 1, 2, 3, 4, 5, 6, 7]
+        >>> source.sequence = [1, 2, 3, 4, 5, 6, 7, 8]
 
         >>> actual = list(source.visit_from(5))
         >>> sep = source.chosenLnSep + source.chosenEvtSep
-        >>> expected = ev(['data: 5\\nid: 5', 'data: 6\\nid: 6', 'data: 7\\nid: 7', 'event: testend\\ndata: This is the end'], sep)
+        >>> expected = ev(['data: 5\\nid: 5', 'data: 6\\nid: 6', 'data: 7\\nid: 7',  'data: 8\\nid: 8', 'event: testend\\ndata: This is the end'], sep)
         >>> actual == expected
         True
 
         tart from fromId=5 to closeAt=4
         >>> source = TestSource(2014, 16, 4)  # to the end
-        >>> source.sequence = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+        >>> source.sequence = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
 
         >>> actual = list(source.visit_from(5))
         >>> sep = source.chosenLnSep + source.chosenEvtSep
@@ -246,20 +246,24 @@ class TestSource(object):
         encode = encoder.encode_event
         sendPreamble = self.sendPreamble
 
+        events = [encode(message, None, index+1) for index, message in enumerate(sequence)]
+        events.insert(0, encode(json.dumps(sequence), 'testmeta', 0))
+        events.append(encode("This is the end", 'testend'))
+
         if sendPreamble:
             yield encoder.encode_preamble()
 
-        if fromId == 0:
-            yield encode(json.dumps(sequence), 'testmeta', 0)
+        # if fromId == 0:
+        #     yield encode(json.dumps(sequence), 'testmeta', 0)
 
-        seqEnd = fromId - fromId % closeAt + closeAt + 1 if closeAt else len(sequence)
-        seqEnd = seqEnd if seqEnd < len(sequence) else len(sequence)
+        seqEnd = fromId - fromId % closeAt + closeAt + 1 if closeAt else len(events)+1
+        seqEnd = seqEnd if seqEnd < len(events)-1 else len(events)
 
-        for index, message in enumerate(sequence[fromId:seqEnd]):
-            yield encoder.encode_event(message, None, fromId+index)
+        for event in events[fromId:seqEnd]:
+            yield event
 
-        if seqEnd == len(sequence):
-            yield encode("This is the end", 'testend')
+        # if seqEnd == len(sequence):
+        #     yield encode("This is the end", 'testend')
         # else:
         #     yield encode("", None, seqEnd-1)
 

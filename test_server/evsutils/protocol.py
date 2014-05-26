@@ -77,7 +77,7 @@ class SimpleHTTPServerProtocol(basic.LineReceiver, policies.TimeoutMixin):
 
     START_EVENT_STREAM = \
             "HTTP/1.1 200 OK\r\n"\
-            "Content-Type: text/event-stream; charset=utf-8\r\n"\
+            "Content-Type: text/event-stream\r\n"\
             "Access-Control-Allow-Origin: *\r\n"\
             "Cache-Control: no-cache\r\n"\
             "Transfert-Encoding: identity\r\n"\
