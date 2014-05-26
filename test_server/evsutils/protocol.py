@@ -79,7 +79,9 @@ class SimpleHTTPServerProtocol(basic.LineReceiver, policies.TimeoutMixin):
             "HTTP/1.1 200 OK\r\n"\
             "Content-Type: text/event-stream; charset=utf-8\r\n"\
             "Access-Control-Allow-Origin: *\r\n"\
-            "Cache-Control: no-cache\r\n\r\n"
+            "Cache-Control: no-cache\r\n"\
+            "Transfert-Encoding: identity\r\n"\
+            "Connection: close\r\n\r\n"
 
     MAX_LENGTH_ERROR = encode_http_response(413, 'Request Entity Too Large')
 
