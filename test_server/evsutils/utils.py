@@ -64,7 +64,7 @@ class SimpleHTTPRequest(object):
         >>> reqText = "GET /path/to/my/eventsource?arg1=1&arg2=2 HTTP/1.1\\r\\nheader: 3\\r\\n\\r\\n"
         >>> req = SimpleHTTPRequest(reqText)
         >>> req.path, req.args, req.method, req.version, req.headers
-        ('/path/to/my/eventsource', {'arg1': ['1'], 'arg2': ['2']}, 'GET', (1, 1), {'header': '3'})
+        ('/path/to/my/eventsource', {'arg1': '1', 'arg2': '2'}, 'GET', (1, 1), {'header': '3'})
         """
 
         self.log = customLog.getLogger('Processing HTTP request')
@@ -194,7 +194,7 @@ class TestSource(object):
 
         >>> actual = list(source.visit_from())
         >>> sep = source.chosenLnSep + source.chosenEvtSep
-        >>> expected = ev(['event: testmeta\\ndata: [0, 1, 2]', 'data: 0', 'data: 1', 'id: 1\\ndata: '], sep)
+        >>> expected = ev(['event: testmeta\\ndata: [0, 1, 2]', 'data: 0', 'data: 1\\nid: 1'], sep)
         >>> actual == expected
         True
 
@@ -204,7 +204,7 @@ class TestSource(object):
 
         >>> actual = list(source.visit_from(7))
         >>> sep = source.chosenLnSep + source.chosenEvtSep
-        >>> expected = ev(['data: 7', 'data: 8', 'id: 8\\ndata: '], sep)
+        >>> expected = ev(['data: 7\\nid: 7', 'data: 8\\nid: 8'], sep)
         >>> actual == expected
         True
 
@@ -214,7 +214,7 @@ class TestSource(object):
 
         >>> actual = list(source.visit_from(7))
         >>> sep = source.chosenLnSep + source.chosenEvtSep
-        >>> expected = ev(['data: 7', 'data: 8', 'data: 9', 'event: testend\\ndata: '], sep)
+        >>> expected = ev(['data: 7\\nid: 7', 'data: 8\\nid: 8', 'data: 9\\nid: 9', 'event: testend\\ndata: This is the end'], sep)
         >>> actual == expected
         True
 
@@ -224,19 +224,19 @@ class TestSource(object):
 
         >>> actual = list(source.visit_from(5))
         >>> sep = source.chosenLnSep + source.chosenEvtSep
-        >>> expected = ev(['data: 5', 'data: 6', 'data: 7', 'event: testend\\ndata: '], sep)
+        >>> expected = ev(['data: 5\\nid: 5', 'data: 6\\nid: 6', 'data: 7\\nid: 7', 'event: testend\\ndata: This is the end'], sep)
         >>> actual == expected
         True
 
-        tart from fromId=11 to closeAt=5
-        >>> source = TestSource(2014, 16, 5)  # to the end
+        tart from fromId=5 to closeAt=4
+        >>> source = TestSource(2014, 16, 4)  # to the end
         >>> source.sequence = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
 
-        >>> actual = list(source.visit_from())
+        >>> actual = list(source.visit_from(5))
         >>> sep = source.chosenLnSep + source.chosenEvtSep
-        >>> expected = ev(['data: 5', 'data: 6', 'data: 7', 'event: testend\\ndata: '], sep)
-        >>> print actual
+        >>> expected = ev(['data: 5\\nid: 5', 'data: 6\\nid: 6', 'data: 7\\nid: 7', 'data: 8\\nid: 8'], sep)
         >>> actual == expected
+        True
         """
 
         fromId = int(fromId)
@@ -255,13 +255,13 @@ class TestSource(object):
         seqEnd = fromId - fromId % closeAt + closeAt + 1 if closeAt else len(sequence)
         seqEnd = seqEnd if seqEnd < len(sequence) else len(sequence)
 
-        for message in sequence[fromId:seqEnd]:
-            yield encoder.encode_event(message)
+        for index, message in enumerate(sequence[fromId:seqEnd]):
+            yield encoder.encode_event(message, None, fromId+index)
 
         if seqEnd == len(sequence):
             yield encode("This is the end", 'testend')
-        else:
-            yield encode("", None, seqEnd-1)
+        # else:
+        #     yield encode("", None, seqEnd-1)
 
 
 class EventSourceEncoder(object):
@@ -332,7 +332,7 @@ class EventSourceEncoder(object):
 
         >>> datas = 'first data\\nsecond data'
         >>> EventSourceEncoder().encode_event(datas, 'myevent', 2014)
-        'id: 2014\\nevent: myevent\\ndata: first data\\ndata: second data\\n\\n'
+        'event: myevent\\ndata: first data\\ndata: second data\\nid: 2014\\n\\n'
 
         >>> datas = 'only one line of data'
         >>> EventSourceEncoder().encode_event(datas)
@@ -340,9 +340,9 @@ class EventSourceEncoder(object):
         """
 
         return (u"%s%s%s%s" % (
-            self.encode_mark(evtId) if evtId else '',
             self.encode_name(evtName) if evtName else '',
             self.encode_data(datas),
+            self.encode_mark(evtId) if evtId else '',
             self.eventsep
         )).encode('utf-8')
 

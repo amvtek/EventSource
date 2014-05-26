@@ -108,7 +108,7 @@ class SimpleHTTPServerProtocol(basic.LineReceiver, policies.TimeoutMixin):
 
     def timeoutConnection(self):
 
-        self.msg.log("request transmission takes too long, timing out")
+        self.log.msg("request transmission takes too long, timing out")
         self.sendError(self.MAX_REQUEST_TRANSMIT_TIME_ERROR)
 
     def connectionLost(self, reason=None):
