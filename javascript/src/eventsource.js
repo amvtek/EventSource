@@ -360,6 +360,15 @@
             }
 
             if (encodedArgs.length > 0){
+                var utilEl = document.createElement('a');
+                utilEl.href = baseURL;
+
+                if (utilEl.search && utilEl.search.length > 0) {
+                    // baseURL has already a query string; we should preserve it
+                    utilEl.search = utilEl.search + '&' + encodedArgs.join('&');
+                    return utilEl.href;
+                }
+
                 return baseURL + '?' + encodedArgs.join('&');
             }
             return baseURL;
