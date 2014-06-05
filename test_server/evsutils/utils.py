@@ -141,6 +141,7 @@ class SimpleHTTPRequest(object):
 
         return bool(self._error)
 
+
 class TestSource(object):
 
     lineSep = ['\n', '\r', '\r\n']
@@ -253,19 +254,11 @@ class TestSource(object):
         if sendPreamble:
             yield encoder.encode_preamble()
 
-        # if fromId == 0:
-        #     yield encode(json.dumps(sequence), 'testmeta', 0)
-
         seqEnd = fromId - fromId % closeAt + closeAt + 1 if closeAt else len(events)+1
         seqEnd = seqEnd if seqEnd < len(events)-1 else len(events)
 
         for event in events[fromId:seqEnd]:
             yield event
-
-        # if seqEnd == len(sequence):
-        #     yield encode("This is the end", 'testend')
-        # else:
-        #     yield encode("", None, seqEnd-1)
 
 
 class EventSourceEncoder(object):

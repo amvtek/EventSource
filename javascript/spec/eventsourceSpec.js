@@ -161,6 +161,17 @@ describe("Testing EventSource polyfill with MockupXHR", function() {
 
     describe("tests for urlWithParams", function() {
 
+        it("When the baseURL already contains arguments, the rest of evs arguments are appended.", function() {
+
+            var params =  {
+                a: 1,
+                b: 2
+            };
+            var evs = new this.eventSource('http://example.com?ciao=ola');
+            var urlWithParams = evs.urlWithParams;
+            expect(urlWithParams('http://example.com?ciao=ola', params)).toBe('http://example.com?ciao=ola&a=1&b=2');
+        })
+
         it("When called with a null or undefined params, baseUrl is returned.", function() {
             // the prefix is set in SpecRunner.html
 

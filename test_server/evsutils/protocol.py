@@ -45,14 +45,14 @@ class EventSourceRequest(SimpleHTTPRequest):
 
             # read message sequence length
             errReason = "Can not parse sequence length"
-            seqlength =  reqArgs.get('evs_num_messages', None) or\
-                    reqHeaders.get('X-EVS-Test-Num-Message'.lower(), None) or None
+            seqlength = reqArgs.get('evs_num_messages', None) or \
+                        reqHeaders.get('X-EVS-Test-Num-Message'.lower(), None) or None
             self.evsArgs['length'] = int(seqlength)
 
             # read closeAt
             errReason = "Can not parse closeAt"
-            closeAt =   reqArgs.get('evs_close_at', None) or\
-                        reqHeaders.get('X-EVS-Test-CloseAt'.lower(), None)
+            closeAt = reqArgs.get('evs_close_at', None) or\
+                      reqHeaders.get('X-EVS-Test-CloseAt'.lower(), None)
             self.evsArgs['closeAt'] = int(closeAt) if closeAt else None
             
             # read sendPreamble

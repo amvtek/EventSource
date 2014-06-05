@@ -360,7 +360,10 @@
             }
 
             if (encodedArgs.length > 0){
-                return baseURL + '?' + encodedArgs.join('&');
+
+                if (baseURL.indexOf('?') == -1)
+                    return baseURL + '?' + encodedArgs.join('&');
+                return baseURL + '&' + encodedArgs.join('&');
             }
             return baseURL;
         },
@@ -545,7 +548,6 @@
             // send the request
 
             request.open('GET', evs.urlWithParams(evs.URL,reqGetArgs));
-//            setTimeout(function(){request.send();},0); //MV : do we need this ?
             request.send();
         };
 
