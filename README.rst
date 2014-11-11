@@ -9,6 +9,15 @@ Provide polyfill to support EventSource in browser where it is not available.
  * Tested in Android browser 2.1 +
  * `Documented`_
 
+Installing
+==========
+
+You can get the code from bower::
+
+    bower install eventsource-polyfill
+
+Just include *eventsource.js* or *eventsource.min.js* in your page to use the polyfill.
+
 Run the tests now
 =================
 
