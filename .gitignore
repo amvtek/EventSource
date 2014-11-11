@@ -1,3 +1,6 @@
+# vim swp files
+*.swp
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -11,7 +14,6 @@ env/
 bin/
 build/
 develop-eggs/
-dist/
 eggs/
 lib/
 lib64/
@@ -21,6 +23,12 @@ var/
 *.egg-info/
 .installed.cfg
 *.egg
+
+# Twisted plugins cache
+test_server/twisted/plugins/dropin.cache
+
+# local node_modules
+node_modules/
 
 # Installer logs
 pip-log.txt
