@@ -1,6 +1,5 @@
 {
   "name": "eventsource-polyfill",
-  "version": "0.9.1",
   "homepage": "https://github.com/amvtek/EventSource",
   "authors": [
     "amvtek <devel@amvtek.com>"
