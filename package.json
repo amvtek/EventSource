@@ -1,8 +1,8 @@
 {
-  "name": "amvtek-eventsource-polyfill",
-  "version": "0.0.1",
+  "name": "eventsource-polyfill",
+  "version": "0.9.1",
   "description": "A polyfill for http://www.w3.org/TR/eventsource/",
-  "main": "index.js",
+  "main": "javascript/src/eventsource.js",
   "directories": {
     "doc": "docs"
   },
