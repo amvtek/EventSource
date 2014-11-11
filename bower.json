@@ -16,6 +16,10 @@
   "license": "MIT",
   "ignore": [
     "**/.*",
+    "javascript",
+    "test_server",
+    "Gruntfile.js",
+    "package.json",
     "node_modules",
     "bower_components",
     "test",

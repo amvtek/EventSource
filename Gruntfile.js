@@ -2,6 +2,11 @@ module.exports = function(grunt) {
     "use strict";
     grunt.initConfig({
 	pkg: grunt.file.readJSON('package.json'),
+	copy: {
+	    main:{
+		files: [{ src: ['javascript/src/eventsource.js'], dest: 'eventsource.js'}]
+	    }
+	},
 	uglify: {
 	    options: {
 		preserveComments: "some",
@@ -15,6 +20,7 @@ module.exports = function(grunt) {
 	    }
 	}
 	});
+    grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.registerTask('default', ['uglify']);
+    grunt.registerTask('default', ['copy','uglify']);
 };
