@@ -1,26 +1,35 @@
 module.exports = function(grunt) {
+
     "use strict";
+    
     grunt.initConfig({
+
 	pkg: grunt.file.readJSON('package.json'),
-	copy: {
-	    main:{
-		files: [{ src: ['javascript/src/eventsource.js'], dest: 'eventsource.js'}]
+
+	'string-replace': {
+	    dist: {
+		options: {
+		    replacements: [
+			{pattern: /{{VERSION}}/g, replacement: '<%= pkg.version %>'}
+		    ]
+		},
+		files: {
+		    'dist/eventsource.js': ['javascript/src/eventsource.js']
+		}
 	    }
 	},
+
 	uglify: {
-	    options: {
-		preserveComments: "some",
-		compress: {
-		drop_console: true
+	    dist: {
+		files: {
+		    'dist/eventsource.min.js': ['dist/eventsource.js']
+		}
 	    }
-	    },
-	    build: {
-		src: 'javascript/src/eventsource.js',
-		dest: 'eventsource.min.js'
-	    }
-	}
-	});
-    grunt.loadNpmTasks('grunt-contrib-copy');
+	},
+
+	
+    });
+    grunt.loadNpmTasks('grunt-string-replace');
     grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.registerTask('default', ['copy','uglify']);
+    grunt.registerTask('default', ['string-replace', 'uglify']);
 };
