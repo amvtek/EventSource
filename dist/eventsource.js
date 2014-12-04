@@ -1,3 +1,8 @@
+/*
+   * EventSource polyfill version 0.9.3
+   * Supported by sc AmvTek srl
+   * :email: devel@amvtek.com
+ */
 ;(function (global) {
 
     if (global.EventSource && !global._eventSourceImportPrefix){
