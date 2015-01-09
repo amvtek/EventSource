@@ -1,5 +1,5 @@
 /*
-   * EventSource polyfill version 0.9.3
+   * EventSource polyfill version 0.9.4
    * Supported by sc AmvTek srl
    * :email: devel@amvtek.com
  */
@@ -434,7 +434,7 @@
 
             request.open('GET', evs.urlWithParams(evs.URL, evs.getArgs), true);
 
-            var headers = evs.requestHeaders; // maybe null
+            var headers = evs.xhrHeaders; // maybe null
             for (var header in headers) {
                 if (headers.hasOwnProperty(header)){
                     request.setRequestHeader(header, headers[header]);
