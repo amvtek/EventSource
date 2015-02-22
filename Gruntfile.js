@@ -14,7 +14,8 @@ module.exports = function(grunt) {
 		    ]
 		},
 		files: {
-		    'dist/eventsource.js': ['javascript/src/eventsource.js']
+		    'dist/eventsource.js': ['javascript/src/eventsource.js'],
+		    'dist/browserify-eventsource.js': ['javascript/src/browserify-eventsource.js']
 		}
 	    }
 	},

@@ -1,13 +1,15 @@
 {
   "name": "eventsource-polyfill",
-  "version": "0.9.4",
-  "description": "A polyfill for http://www.w3.org/TR/eventsource/",
-  "main": "javascript/src/eventsource.js",
-  "directories": {
-    "doc": "docs"
-  },
+  "version": "0.9.5",
+  "description": "A browser polyfill for W3C EventSource (http://www.w3.org/TR/eventsource/)",
+  "main": "dist/browserify-eventsource.js",
+  "directories": { "doc": "docs" },
+  "files": [
+    "dist/eventsource.js",
+    "dist/browserify-eventsource.js"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: to run browser tests, visit http://testevs.amvtek.com/\" && exit 1"
   },
   "repository": {
     "type": "git",

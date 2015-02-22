@@ -1,5 +1,5 @@
 /*
-   * CommonJS module that exports EventSource polyfill version {{VERSION}}
+   * CommonJS module that exports EventSource polyfill version 0.9.5
    * This module is intended for browser side use
    * =====================================================================
    * THIS IS A POLYFILL MODULE, SO IT HAS SIDE EFFECTS
@@ -12,6 +12,7 @@
 
 
 var PolyfillEventSource = require('./eventsource.js').EventSource;
+console.log("@@> browserify-eventsource",PolyfillEventSource);
 module.exports = PolyfillEventSource;
 
 // Add EventSource to window if it is missing...
