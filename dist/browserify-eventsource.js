@@ -12,7 +12,6 @@
 
 
 var PolyfillEventSource = require('./eventsource.js').EventSource;
-console.log("@@> browserify-eventsource",PolyfillEventSource);
 module.exports = PolyfillEventSource;
 
 // Add EventSource to window if it is missing...
