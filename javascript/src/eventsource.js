@@ -144,7 +144,6 @@
             }
 
             if (this._noActivityTimer){
-//                this.log('removing no-activity timer')
                 clearInterval(this._noActivityTimer);
                 this._noActivityTimer = null;
             }
@@ -183,7 +182,6 @@
 
             if (request.isReady() && !request.hasError() ) {
                 // reset the timer, as we have activity
-//                this.log.msg('reseting the no-activity timer inside ondata')
                 this.resetNoActivityTimer();
 
                 // move this EventSource to OPEN state...
@@ -620,5 +618,4 @@
     }
 
     global[evsImportName] = EventSource;
-
 })(this);
