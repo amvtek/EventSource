@@ -8,15 +8,33 @@ Provide polyfill to support EventSource in browser where it is not available.
  * Tested in Internet Explorer 8 + 
  * Tested in Android browser 2.1 +
  * `Documented`_
+ * Run the `Browser test suite`_
 
 Installing
 ==========
 
-You can get the code from bower::
+from source
+~~~~~~~~~~~
+
+Download suitable project archive (zip or tar.gz) from `release page`_
+
+Include *dist/eventsource.js* or *dist/eventsource.min.js* in your page to use the polyfill.
+
+Using bower package manager
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To install package from **bower registry**, type ::
 
     bower install eventsource-polyfill
 
-Just include *eventsource.js* or *eventsource.min.js* in your page to use the polyfill.
+Just include *bower_components/eventsource-polyfill/dist/eventsource.js* or *bower_components/eventsource-polyfill/dist/eventsource.min.js* in your page to use the polyfill.
+
+Using npm package manager
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To install package from **npm registry**, type ::
+
+    npm install eventsource-polyfill
 
 Run the tests now
 =================
@@ -28,6 +46,9 @@ Allow **sufficient time** ( ~ 5 minutes) for the full Test Suite to run...
 Project content
 ===============
 
+dist/
+    built version of javascript modules
+
 javascript/
     Contains polyfill module and related unit tests
 
@@ -38,3 +59,5 @@ docs/
     documentation wiki
 
 .. _Documented: https://github.com/amvtek/EventSource/wiki
+.. _Browser test suite: http://testevs.amvtek.com/ 
+.. _release page: https://github.com/amvtek/EventSource/releases/latest

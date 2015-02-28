@@ -22,7 +22,7 @@
     "event-source",
     "polyfill"
   ],
-  "author": "sc AmvTek srl (http://www.amvtek.com/)",
+  "author": "amvtek <devel@amvtek.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/amvtek/EventSource/issues"
