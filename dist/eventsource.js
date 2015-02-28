@@ -1,5 +1,5 @@
 /*
-   * EventSource polyfill version 0.9.5
+   * EventSource polyfill version 0.9.6
    * Supported by sc AmvTek srl
    * :email: devel@amvtek.com
  */
