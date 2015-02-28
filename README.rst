@@ -44,8 +44,8 @@ To install package from **npm registry**, type ::
 
 Note that this package may only be used with in **browser application**.
 
-If you are using `browserify`_ , if in need to polyfill missing EventSource
-implementation, you just have to require this package in your main module...
+If you are using `browserify`_ , you just have to require this package in your
+main module...
 
 .. code-block:: javascript
 
