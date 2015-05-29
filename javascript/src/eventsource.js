@@ -277,7 +277,7 @@
                 if (datas.length) {
                     // dispatch a new event
                     var event = new MessageEvent(eventType, datas.join('\n'), window.location.origin, this.lastEventId);
-                    this.dispatchEvent(eventType, event);
+                    this.dispatchEvent('message', event);
                 }
             }
 
