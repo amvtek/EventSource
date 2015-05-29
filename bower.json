@@ -1,16 +1,17 @@
 {
   "name": "eventsource-polyfill",
-  "homepage": "https://github.com/amvtek/EventSource",
+  "main": ["javascript/src/eventsource.js", "eventsource.min.js"],
+  "homepage": "https://github.com/streamdataio/EventSource",
   "authors": [
-    "amvtek <devel@amvtek.com>"
+    "Motwin"
   ],
-  "description": "A polyfill for http://www.w3.org/TR/eventsource/",
-  "main": ["javascript/src/eventsource.js", "eventsource.min.js", "README.rst"],
+  "description": "Javascript EventSource polyfill for Streamdata.io",
   "keywords": [
+    "streamdata",
+    "streamdata.io",
+    "push",
     "sse",
-    "server sent events",
-    "eventsource",
-    "event-source",
+    "server-sent-event",
     "polyfill"
   ],
   "license": "MIT",
@@ -25,5 +26,7 @@
     "test",
     "tests",
     "docs"
-  ]
+  ],
+  "dependencies": {},
+  "devDependencies": {}
 }
