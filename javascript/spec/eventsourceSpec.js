@@ -562,27 +562,26 @@ describe('Tests with twisted server:', function() {
     function addEventListeners(evs, done) {
 
         evs.addEventListener('message', function (e) {
-//            if (e.lastEventId) {console.log(e.lastEventId);}
-//            console.log('message: ' + e.type + ":" + e.data)
-//            console.log(e)
-            if (e.data) {receivedMessageEvents.push(e.data);}
+
+        evs.addEventListener('message', function (e) {
+            console.log('message: ' + e.type + ":" + e.data);
+            if (e.data) {
+                receivedMessageEvents.push(e.data);
+                if (e.type == 'testmeta') {
+                    console.log("received testmeta:" + e.type + "["+ evs.id +"]: "+ e.data);
+                    receivedTestMetaEvents = JSON.parse(e.data);
+                }
+                else if (e.type == 'testend') {
+                        console.log('received tesend' + e.type + ":" + e.data + "end");
+                        receivedTestEndEvents.push(e.type);
+                }
+            }
         }, false);
         evs.addEventListener('open', function (e) {
             receivedOpenEvents.push(e.type);
         }, false);
         evs.addEventListener('error', function (e) {
             receivedErrorEvents.push(e.type);
-        }, false);
-        evs.addEventListener('testmeta', function (e) {
-//            console.log("received testmeta:" + e.type + "["+ evs.id +"]: "+ e.data);
-//            console.log(e)
-            receivedTestMetaEvents = JSON.parse(e.data);
-        }, false);
-        evs.addEventListener('testend', function (e) {
-            receivedTestEndEvents.push(e.type);
-//            console.log('received tesend' + e.type + ":" + e.data + "end");
-//            console.log(e)
-            done();
         }, false);
     }
 
