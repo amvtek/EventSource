@@ -54,7 +54,7 @@ describe("Testing EventSource polyfill with MockupXHR", function() {
             sendData: function(str) {
 
                 this.responseText += str;
-                this.evs.ondata();
+                this.evs._onxhrdata();
             }
         };
 
@@ -264,22 +264,22 @@ describe("Testing EventSource polyfill with MockupXHR", function() {
 
     describe("Simulates EventSource stream using MockupXHR", function() {
 
-        var evs, recievedMessageEvents, recievedOpenEvents, recievedErrorEvents;
+        var evs, receivedMessageEvents, receivedOpenEvents, receivedErrorEvents;
 
         beforeEach(function (done) {
 
             evs = new this.eventSource('http://exampleSimulatesEventSourceWithMockupXHR.com');
-            recievedMessageEvents = [];
-            recievedOpenEvents = [];
-            recievedErrorEvents = [];
+            receivedMessageEvents = [];
+            receivedOpenEvents = [];
+            receivedErrorEvents = [];
             evs.addEventListener('message', function(e) {
-                recievedMessageEvents.push(e.data);
+                receivedMessageEvents.push(e.data);
             }, false);
             evs.addEventListener('open', function(e) {
-                recievedOpenEvents.push(e.type);
+                receivedOpenEvents.push(e.type);
             }, false);
             evs.addEventListener('error', function(e) {
-                recievedErrorEvents.push(e.type);
+                receivedErrorEvents.push(e.type);
             }, false);
 
             setTimeout(function () {
@@ -301,14 +301,14 @@ describe("Testing EventSource polyfill with MockupXHR", function() {
 
             evs._xhr.sendData('\ufeffdata: "First line of data."\r\r');
             var expectedEvents = ['"First line of data."'];
-            expect(recievedMessageEvents).toEqual(expectedEvents);
+            expect(receivedMessageEvents).toEqual(expectedEvents);
         });
 
         it("Multiline message are properly reassembled", function () {
 
             evs._xhr.sendData('data: "First line of data."\ndata: "Second line of data."\r\r');
             var expectedEvents = ['"First line of data."\n"Second line of data."'];
-            expect(recievedMessageEvents).toEqual(expectedEvents);
+            expect(receivedMessageEvents).toEqual(expectedEvents);
         });
 
         it("Chunky transmissions are properly buffered", function () {
@@ -316,7 +316,7 @@ describe("Testing EventSource polyfill with MockupXHR", function() {
             evs._xhr.sendData('data: "First line of data."\ndata: "Second line of data."\n\ndata: "First part of broken message.');
             evs._xhr.sendData('Second part of broken message."\n\n');
             var expectedEvents = ['"First line of data."\n"Second line of data."', '"First part of broken message.Second part of broken message."'];
-            expect(recievedMessageEvents).toEqual(expectedEvents);
+            expect(receivedMessageEvents).toEqual(expectedEvents);
         });
 
         it("id lines are properly processed", function () {
@@ -334,7 +334,7 @@ describe("Testing EventSource polyfill with MockupXHR", function() {
             evs._xhr.sendData('Second part of broken message."\n\nid: 1983\rdata: "Message with new id"\n\n');
             evs._xhr.sendData('data: "Message to force dispatching the open event"\n\n');
             var expectedOpenEvents = ["open", "open"];
-            expect(recievedOpenEvents).toEqual(expectedOpenEvents);
+            expect(receivedOpenEvents).toEqual(expectedOpenEvents);
         });
 
         describe("Manually ticking the Jasmine Clock to produce a sleep until events are fired:", function () {
@@ -369,8 +369,8 @@ describe("Testing EventSource polyfill with MockupXHR", function() {
                 var expectedOpenEvents = ["open", "open"];
                 var expectedErrorEvents = ["error"];
 
-                expect(recievedOpenEvents).toEqual(expectedOpenEvents);
-                expect(recievedErrorEvents).toEqual(expectedErrorEvents);
+                expect(receivedOpenEvents).toEqual(expectedOpenEvents);
+                expect(receivedErrorEvents).toEqual(expectedErrorEvents);
             });
         });
     });
@@ -379,9 +379,9 @@ describe("Testing EventSource polyfill with MockupXHR", function() {
 describe("Evaluating EventSource 'time to attach listener' doubt", function() {
 
     var evs, previousXHR,
-        recievedMessageEvents = [],
-        recievedOpenEvents = [],
-        recievedErrorEvents = [];
+        receivedMessageEvents = [],
+        receivedOpenEvents = [],
+        receivedErrorEvents = [];
 
     beforeEach(function (done) {
 
@@ -433,7 +433,7 @@ describe("Evaluating EventSource 'time to attach listener' doubt", function() {
 
                 evs = this.evs;
                 this.responseText += str;
-                evs.ondata();
+                evs._onxhrdata();
             }
         };
 
@@ -444,13 +444,13 @@ describe("Evaluating EventSource 'time to attach listener' doubt", function() {
         evs = new this.eventSource('http://exampleTimeToAttachDoubt.com');
 
         evs.addEventListener('message', function(e) {
-            recievedMessageEvents.push(e.data);
+            receivedMessageEvents.push(e.data);
         }, false);
         evs.addEventListener('open', function(e) {
-            recievedOpenEvents.push(e.type);
+            receivedOpenEvents.push(e.type);
         }, false);
         evs.addEventListener('error', function(e) {
-            recievedErrorEvents.push(e.data);
+            receivedErrorEvents.push(e.data);
         }, false);
         setTimeout(function () {
             done();
@@ -466,7 +466,7 @@ describe("Evaluating EventSource 'time to attach listener' doubt", function() {
     it("should catch initial message sent", function (done) {
 
         var expectedMessageEvents = ['"I will fire very quick"'];
-        expect(recievedMessageEvents).toEqual(expectedMessageEvents);
+        expect(receivedMessageEvents).toEqual(expectedMessageEvents);
         done();
     })
 });
@@ -474,9 +474,9 @@ describe("Evaluating EventSource 'time to attach listener' doubt", function() {
 describe('Failed XHR request(invalid url) shall trigger EventSource to close and "error" event to be dispatched', function() {
 
     var evs,
-        recievedMessageEvents = [],
-        recievedOpenEvents = [],
-        recievedErrorEvents = [];
+        receivedMessageEvents = [],
+        receivedOpenEvents = [],
+        receivedErrorEvents = [];
 
     beforeEach(function (done) {
 
@@ -486,13 +486,13 @@ describe('Failed XHR request(invalid url) shall trigger EventSource to close and
         evs = new this.eventSource('http://exampleFailedXHRequest');
 
         evs.addEventListener('message', function (e) {
-            recievedMessageEvents.push(e.data);
+            receivedMessageEvents.push(e.data);
         }, false);
         evs.addEventListener('open', function (e) {
-            recievedOpenEvents.push(e.type);
+            receivedOpenEvents.push(e.type);
         }, false);
         evs.addEventListener('error', function (e) {
-            recievedErrorEvents.push(e.type);
+            receivedErrorEvents.push(e.type);
             done();
         }, false);
     });
@@ -500,13 +500,13 @@ describe('Failed XHR request(invalid url) shall trigger EventSource to close and
     afterEach(function (done) {
 
         evs.close();
-        recievedErrorEvents = [];
+        receivedErrorEvents = [];
         done();
     });
 
     it("should send error event", function (done) {
 
-        expect(recievedErrorEvents.length).toBe(1);
+        expect(receivedErrorEvents.length).toBe(1);
         done();
     });
 });
@@ -514,9 +514,9 @@ describe('Failed XHR request(invalid url) shall trigger EventSource to close and
 describe('Failed XHR request(missing-code 404) shall trigger EventSource to close and "error" event to be dispatched', function() {
 
     var evs,
-        recievedMessageEvents = [],
-        recievedOpenEvents = [],
-        recievedErrorEvents = [];
+        receivedMessageEvents = [],
+        receivedOpenEvents = [],
+        receivedErrorEvents = [];
 
     beforeEach(function (done) {
 
@@ -526,13 +526,13 @@ describe('Failed XHR request(missing-code 404) shall trigger EventSource to clos
         evs = new this.eventSource('/missing');
 
         evs.addEventListener('message', function (e) {
-            recievedMessageEvents.push(e.data);
+            receivedMessageEvents.push(e.data);
         }, false);
         evs.addEventListener('open', function (e) {
-            recievedOpenEvents.push(e.type);
+            receivedOpenEvents.push(e.type);
         }, false);
         evs.addEventListener('error', function (e) {
-            recievedErrorEvents.push(e.type);
+            receivedErrorEvents.push(e.type);
             done();
         }, false);
     });
@@ -544,7 +544,7 @@ describe('Failed XHR request(missing-code 404) shall trigger EventSource to clos
 
     it("should send error event", function (done) {
 
-        expect(recievedErrorEvents.length).toBe(1);
+        expect(receivedErrorEvents.length).toBe(1);
         done();
     });
 });
