@@ -1,6 +1,6 @@
 {
   "name": "eventsource-polyfill",
-  "version": "0.9.6",
+  "version": "0.9.7",
   "description": "A browser polyfill for W3C EventSource (http://www.w3.org/TR/eventsource/)",
   "main": "dist/browserify-eventsource.js",
   "directories": { "doc": "docs" },

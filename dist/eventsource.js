@@ -1,5 +1,5 @@
 /*
-   * EventSource polyfill version 0.9.6
+   * EventSource polyfill version 0.9.7
    * Supported by sc AmvTek srl
    * :email: devel@amvtek.com
  */
@@ -176,7 +176,7 @@
             this.cleanup();
         },
 
-        ondata: function() {
+        _onxhrdata: function() {
 
             var request = this._xhr;
 
@@ -413,7 +413,7 @@
             request.onreadystatechange = function(){
                 if (request.readyState > 1 && evs.readyState != evs.CLOSED) {
                     if (request.status == 200 || (request.status>=300 && request.status<400)){
-                        evs.ondata();
+                        evs._onxhrdata();
                     }
                     else {
                         request._failed = true;
@@ -505,12 +505,12 @@
             // set handlers
             request.onprogress = function(){
                 request._ready = true;
-                evs.ondata();
+                evs._onxhrdata();
             };
 
             request.onload = function(){
                 this._loaded = true;
-                evs.ondata();
+                evs._onxhrdata();
             };
 
             request.onerror = function(){

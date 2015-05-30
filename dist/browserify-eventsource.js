@@ -1,5 +1,5 @@
 /*
-   * CommonJS module that exports EventSource polyfill version 0.9.6
+   * CommonJS module that exports EventSource polyfill version 0.9.7
    * This module is intended for browser side use
    * =====================================================================
    * THIS IS A POLYFILL MODULE, SO IT HAS SIDE EFFECTS
