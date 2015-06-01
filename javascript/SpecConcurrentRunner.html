@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html>	
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Polyfill EventSource Test Suite</title>
+
+  <link rel="shortcut icon" type="image/png" href="lib/jasmine-2.0.0/jasmine_favicon.png">
+  <link rel="stylesheet" type="text/css" href="lib/jasmine-2.0.0/jasmine.css">
+
+  <script type="text/javascript" src="lib/jasmine-2.0.0/jasmine.js"></script>
+  <script type="text/javascript" src="lib/jasmine-2.0.0/jasmine-html.js"></script>
+  <script type="text/javascript" src="lib/jasmine-2.0.0/boot.js"></script>
+
+  <!-- include source files here... -->
+  <!--<script type="text/javascript" src="src/EventSource.js"></script>-->
+    <script>
+        // We define a prefix prior to importing evs
+        window._eventSourceImportPrefix = 'Test';
+    </script>
+    <script type="text/javascript" src="src/eventsource.js"></script>
+
+  <!-- include spec files here... -->
+    <!--<script type="text/javascript" src="spec/EventSourceSpec.js"></script>-->
+    <script type="text/javascript" src="spec/concurrentSpec.js"></script>
+
+</head>
+
+<body>
+
+<h1> Concurrent polyfill EventSource Test Suite </h1>
+
+<div class="test-infos">
+  <p>
+      Be patient, those tests need a few minutes to complete.
+  </p>
+
+  <script>
+      if (window["EventSource"]) {
+	  document.write('<p>This browser supports EventSource natively</p>')
+      }
+      else {
+	  document.write("<p>This browser doesn't support EventSource</p>")
+      }
+  </script>
+</div>
+
+</body>
+
+</html>
