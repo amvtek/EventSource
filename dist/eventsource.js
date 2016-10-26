@@ -33,6 +33,8 @@
 
         defaultOptions: {
 
+            withCredentials: false,
+
             loggingEnabled: false,
 
             loggingPrefix: "eventsource",
@@ -442,6 +444,9 @@
                 request.setRequestHeader('Last-Event-Id', evs.lastEventId);
             }
 
+            if (evs.withCredentials){
+                request.withCredentials = true;
+            }
             request.send();
         };
 

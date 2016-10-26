@@ -17,7 +17,8 @@ module.exports = PolyfillEventSource;
 // Add EventSource to window if it is missing...
 if (window && !window.EventSource){
     window.EventSource = PolyfillEventSource;
-    if (console){
-	console.log("polyfill-eventsource added missing EventSource to window");
+    // Don't break IE < 10
+    if (typeof console !== "undefined" && typeof console.log !== "undefined"){
+        console.log("polyfill-eventsource added missing EventSource to window");
     }
 }
