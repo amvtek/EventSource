@@ -5,7 +5,7 @@
     "amvtek <devel@amvtek.com>"
   ],
   "description": "A polyfill for http://www.w3.org/TR/eventsource/",
-  "main": ["javascript/src/eventsource.js", "eventsource.min.js", "README.rst"],
+  "main": ["dist/eventsource.js", "dist/eventsource.min.js", "README.md"],
   "keywords": [
     "sse",
     "server sent events",
