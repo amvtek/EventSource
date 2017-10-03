@@ -1,5 +1,5 @@
 {
-  "name": "eventsource-polyfill",
+  "name": "eventsource-polyfill-bugfixes",
   "version": "0.9.8",
   "description": "A browser polyfill for W3C EventSource (http://www.w3.org/TR/eventsource/). This is fork containg fixes. Original work can be found here: https://github.com/amvtek/EventSource.git ",
   "main": "dist/browserify-eventsource.js",
