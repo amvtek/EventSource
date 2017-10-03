@@ -1,9 +1,11 @@
 {
   "name": "eventsource-polyfill",
-  "version": "0.9.7",
-  "description": "A browser polyfill for W3C EventSource (http://www.w3.org/TR/eventsource/)",
+  "version": "0.9.8",
+  "description": "A browser polyfill for W3C EventSource (http://www.w3.org/TR/eventsource/). This is fork containg fixes. Original work can be found here: https://github.com/amvtek/EventSource.git ",
   "main": "dist/browserify-eventsource.js",
-  "directories": { "doc": "docs" },
+  "directories": {
+    "doc": "docs"
+  },
   "files": [
     "dist/eventsource.js",
     "dist/browserify-eventsource.js"
@@ -13,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/amvtek/EventSource.git"
+    "url": "https://github.com/zabrowarnyrafal/EventSource.git"
   },
   "keywords": [
     "sse",
@@ -22,14 +24,14 @@
     "event-source",
     "polyfill"
   ],
-  "author": "amvtek <devel@amvtek.com>",
+  "author": "zabrowarnyrafal <zabrowarnyrafal@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/amvtek/EventSource/issues"
+    "url": "https://github.com/zabrowarnyrafal/EventSource/issues"
   },
-  "homepage": "https://github.com/amvtek/EventSource",
+  "homepage": "https://github.com/zabrowarnyrafal/EventSource",
   "devDependencies": {
-    "grunt": "^0.4.5",
+    "grunt": "^1.0.1",
     "grunt-contrib-uglify": "^0.6.0",
     "grunt-string-replace": "^1.0.0"
   }
