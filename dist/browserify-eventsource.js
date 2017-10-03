@@ -1,5 +1,5 @@
 /*
-   * CommonJS module that exports EventSource polyfill version 0.9.7
+   * CommonJS module that exports EventSource polyfill version 0.9.8
    * This module is intended for browser side use
    * =====================================================================
    * THIS IS A POLYFILL MODULE, SO IT HAS SIDE EFFECTS
@@ -17,7 +17,8 @@ module.exports = PolyfillEventSource;
 // Add EventSource to window if it is missing...
 if (window && !window.EventSource){
     window.EventSource = PolyfillEventSource;
-    if (console){
-	console.log("polyfill-eventsource added missing EventSource to window");
+    // Don't break IE < 10
+    if (typeof console !== "undefined" && typeof console.log !== "undefined"){
+        console.log("polyfill-eventsource added missing EventSource to window");
     }
 }

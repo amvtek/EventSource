@@ -3,7 +3,9 @@
   "version": "0.9.8",
   "description": "A browser polyfill for W3C EventSource (http://www.w3.org/TR/eventsource/). This is fork containg fixes. Original work can be found here: https://github.com/amvtek/EventSource.git ",
   "main": "dist/browserify-eventsource.js",
-  "directories": { "doc": "docs" },
+  "directories": {
+    "doc": "docs"
+  },
   "files": [
     "dist/eventsource.js",
     "dist/browserify-eventsource.js"
@@ -29,7 +31,7 @@
   },
   "homepage": "https://github.com/zabrowarnyrafal/EventSource",
   "devDependencies": {
-    "grunt": "^0.4.5",
+    "grunt": "^1.0.1",
     "grunt-contrib-uglify": "^0.6.0",
     "grunt-string-replace": "^1.0.0"
   }
