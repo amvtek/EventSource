@@ -1,11 +1,11 @@
 {
-  "name": "eventsource-polyfill",
-  "homepage": "https://github.com/amvtek/EventSource",
+  "name": "eventsource-polyfill-bugfixes",
+  "homepage": "https://github.com/zabrowarnyrafal/EventSource",
   "authors": [
-    "amvtek <devel@amvtek.com>"
+    "zabrowarnyrafal <zabrowarnyrafal@gmail.com>"
   ],
   "description": "A polyfill for http://www.w3.org/TR/eventsource/",
-  "main": ["dist/eventsource.js", "dist/eventsource.min.js", "README.md"],
+  "main": "dist/eventsource.js",
   "keywords": [
     "sse",
     "server sent events",
