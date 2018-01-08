@@ -274,7 +274,7 @@
                     }
                 }
 
-                if (datas.length) {
+                if (datas.length && this.readyState != this.CLOSED) {
                     // dispatch a new event
                     var event = new MessageEvent(eventType, datas.join('\n'), window.location.origin, this.lastEventId);
                     this.dispatchEvent(eventType, event);
