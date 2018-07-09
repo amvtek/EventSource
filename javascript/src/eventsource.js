@@ -411,7 +411,7 @@
 
             // set handlers
             request.onreadystatechange = function(){
-                if (request.readyState > 1 && evs.readyState != evs.CLOSED) {
+                if (request.readyState > 2 && evs.readyState != evs.CLOSED) {
                     if (request.status == 200 || (request.status>=300 && request.status<400)){
                         evs._onxhrdata();
                     }
