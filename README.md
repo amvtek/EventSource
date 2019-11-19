@@ -1,3 +1,5 @@
+#### This is fork of EventSource Polyfill. Orignal work can be found here: https://github.com/amvtek/EventSource. It contains only bugfixes.
+
 EventSource Polyfill
 ====================
 
